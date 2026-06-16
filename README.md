@@ -1,37 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# White Label Inventory System
 
-## Getting Started
+White Label Inventory System is an open, white-label inventory management application built with [Next.js](https://nextjs.org). It is designed to be generic and reusable: items, categories and units of measurement are modeled so that anyone — companies, agencies, or individual developers — can fork, rebrand, and deploy their own inventory system on top of it without rebuilding the core from scratch.
 
-First, run the development server:
+## Concept
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The goal of this project is to provide a solid, ready-to-use inventory management foundation that is free to use and adapt. "White label" means you are welcome to customize the branding, theme, copy, and business rules to fit your own product or your client's product.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**The only condition for using this project (white-labeled or not) is keeping the attribution footer in place.** Every screen must keep a footer crediting the original author with a "Created by..." line linking to:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+[Vinícius Nolêto de Araújo — LinkedIn](https://www.linkedin.com/in/vin%C3%ADcius-nol%C3%AAto-de-ara%C3%BAjo/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Do not remove or hide this link when reusing, forking, or white-labeling this project.
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js](https://nextjs.org)
+- [React](https://react.dev)
+- [Mantine](https://mantine.dev) (UI components)
+- [TanStack Query](https://tanstack.com/query) (data fetching/caching)
+- [Drizzle ORM](https://orm.drizzle.team) + PostgreSQL
+- [Yup](https://github.com/jquense/yup) (schema validation)
+- [Tailwind CSS](https://tailwindcss.com)
+- [i18next](https://www.i18next.com) (internationalization)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Configuration & Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> TODO: this section will be filled in later with setup, environment variables, and deployment instructions.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
- 
+This project is free to use, modify, and white-label, provided the attribution footer described above (link to the [author's LinkedIn](https://www.linkedin.com/in/vin%C3%ADcius-nol%C3%AAto-de-ara%C3%BAjo/)) is kept visible on every screen. See [LICENSE.md](./LICENSE.md) for the full terms.
