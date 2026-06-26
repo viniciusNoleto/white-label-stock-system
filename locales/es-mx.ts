@@ -13,6 +13,8 @@ export default {
       save: 'Guardar',
       cancel: 'Cancelar',
       close: 'Cerrar',
+      edit: 'Editar',
+      delete: 'Eliminar',
     },
     table: {
       emptyDefault: 'No se encontraron datos',
@@ -49,9 +51,85 @@ export default {
     },
   },
 
+  header: {
+    colorScheme: {
+      label: 'Apariencia',
+      light: 'Claro',
+      dark: 'Oscuro',
+      auto: 'Sistema',
+    },
+  },
+
+  sidebar: {
+    section: 'Inventario',
+    items: 'Artículos',
+    categories: 'Categorías',
+    units: 'Unidades',
+    storages: 'Almacenamientos',
+  },
+
+  units: {
+    page: {
+      title: 'Unidades',
+      subtitle: 'Gestiona las unidades de medida',
+    },
+    table: {
+      columns: {
+        name: 'Nombre',
+        abbreviation: 'Abreviatura',
+      },
+      empty: 'No hay unidades registradas. Crea la primera haciendo clic en \'Nueva Unidad\'.',
+    },
+  },
+
+  categories: {
+    page: {
+      title: 'Categorías',
+      subtitle: 'Gestiona las categorías de artículos',
+    },
+    table: {
+      columns: {
+        name: 'Nombre',
+        color: 'Color',
+      },
+      empty: 'No hay categorías registradas. Crea la primera haciendo clic en \'Nueva Categoría\'.',
+    },
+    actions: {
+      edit: 'Editar categoría',
+      delete: 'Eliminar categoría',
+    },
+  },
+
+  storages: {
+    page: {
+      title: 'Almacenamientos',
+      subtitle: 'Gestiona los lugares de almacenamiento',
+    },
+    table: {
+      columns: {
+        name: 'Nombre',
+        description: 'Descripción',
+      },
+      empty: 'No hay almacenamientos registrados. Crea el primero haciendo clic en \'Nuevo Almacenamiento\'.',
+    },
+    actions: {
+      new: 'Nuevo Almacenamiento',
+      edit: 'Editar almacenamiento',
+      delete: 'Eliminar almacenamiento',
+    },
+    modals: {
+      create: 'Nuevo Almacenamiento',
+      update: 'Editar Almacenamiento',
+      delete: 'Eliminar Almacenamiento',
+    },
+    delete: {
+      confirm: '¿Estás seguro de que deseas eliminar el almacenamiento "{{name}}"? Esta acción no se puede deshacer.',
+    },
+  },
+
   inventory: {
     page: {
-      title: 'Inventario',
+      title: 'Artículos',
       subtitle: 'Gestiona tus artículos de existencias',
     },
     actions: {
@@ -68,18 +146,27 @@ export default {
         categories: 'Categorías',
         quantity: 'Cantidad',
         unit: 'Unidad',
+        storage: 'Almacenamiento',
       },
       empty: 'No se encontraron artículos. Crea el primero haciendo clic en \'Nuevo Artículo\'.',
     },
     rowActions: {
       editQuantity: 'Editar cantidad',
+      editName: 'Editar nombre',
+      editStorage: 'Editar almacenamiento',
       build: 'Construir',
     },
     modals: {
       createUnit: 'Nueva Unidad',
+      updateUnit: 'Editar Unidad',
+      deleteUnit: 'Eliminar Unidad',
       createCategory: 'Nueva Categoría',
+      updateCategory: 'Editar Categoría',
+      deleteCategory: 'Eliminar Categoría',
       createItem: 'Nuevo Artículo de Inventario',
       updateQuantity: 'Editar Cantidad',
+      updateName: 'Editar Nombre',
+      updateStorage: 'Editar Almacenamiento',
       build: 'Construir: {{name}}',
     },
   },
@@ -88,11 +175,11 @@ export default {
     unit: {
       name: {
         label: 'Nombre',
-        placeholder: 'Ej: Kilogramo',
+        placeholder: 'Escribe un nombre',
       },
       abbreviation: {
         label: 'Abreviatura',
-        placeholder: 'Ej: kg',
+        placeholder: 'Escribe una abreviatura',
       },
       validation: {
         nameRequired: 'El nombre es obligatorio',
@@ -103,11 +190,11 @@ export default {
     category: {
       name: {
         label: 'Nombre',
-        placeholder: 'Ej: Materia Prima',
+        placeholder: 'Escribe un nombre',
       },
       color: {
         label: 'Color',
-        placeholder: '#6F1FF9',
+        placeholder: 'Escribe un código de color',
       },
       validation: {
         nameRequired: 'El nombre es obligatorio',
@@ -115,27 +202,45 @@ export default {
       },
     },
 
+    storage: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Escribe un nombre',
+      },
+      description: {
+        label: 'Descripción',
+        placeholder: 'Describe este lugar de almacenamiento',
+      },
+      validation: {
+        nameRequired: 'El nombre es obligatorio',
+      },
+    },
+
     inventoryItem: {
       name: {
         label: 'Nombre',
-        placeholder: 'Ej: Tornillo M6',
+        placeholder: 'Escribe un nombre',
       },
       unit: {
         label: 'Unidad',
-        placeholder: 'Seleccionar',
+        placeholder: 'Seleccionar una unidad',
       },
       quantity: {
         label: 'Cantidad inicial',
-        placeholder: '0',
+        placeholder: 'Escribe una cantidad',
       },
       categories: {
         label: 'Categorías',
         placeholder: 'Seleccionar categorías',
       },
+      storage: {
+        label: 'Almacenamiento',
+        placeholder: 'Selecciona un lugar de almacenamiento (opcional)',
+      },
       components: {
         label: 'Componentes',
-        selectPlaceholder: 'Seleccionar artículo como componente',
-        qtyPlaceholder: 'Cant.',
+        selectPlaceholder: 'Seleccionar un artículo',
+        qtyPlaceholder: 'Escribe una cantidad',
         empty: 'No se agregaron componentes.',
       },
       validation: {
@@ -153,9 +258,11 @@ export default {
       },
       quantity: {
         label: 'Nueva cantidad',
+        placeholder: 'Escribe un valor',
       },
       amount: {
         label: 'Valor',
+        placeholder: 'Escribe un valor',
       },
       preview: 'Nueva cantidad: {{count}}',
       validation: {
@@ -172,7 +279,7 @@ export default {
       maxPossibleLabel: 'Máx. posible: {{count}}',
       quantity: {
         label: 'Cantidad a construir',
-        placeholder: '1',
+        placeholder: 'Escribe una cantidad',
       },
       submit: 'Construir',
       validation: {
@@ -185,10 +292,19 @@ export default {
   notifications: {
     errors: {
       createUnit: 'No se pudo crear la unidad. Inténtalo de nuevo.',
+      updateUnit: 'No se pudo actualizar la unidad. Inténtalo de nuevo.',
+      deleteUnit: 'No se pudo eliminar la unidad. Inténtalo de nuevo.',
       createCategory: 'No se pudo crear la categoría. Inténtalo de nuevo.',
+      updateCategory: 'No se pudo actualizar la categoría. Inténtalo de nuevo.',
+      deleteCategory: 'No se pudo eliminar la categoría. Inténtalo de nuevo.',
       createItem: 'No se pudo crear el artículo. Inténtalo de nuevo.',
       updateQuantity: 'No se pudo actualizar la cantidad.',
+      updateItemName: 'No se pudo actualizar el nombre. Inténtalo de nuevo.',
+      updateItemStorage: 'No se pudo actualizar el almacenamiento. Inténtalo de nuevo.',
       build: 'No se pudo construir el artículo.',
+      createStorage: 'No se pudo crear el almacenamiento. Inténtalo de nuevo.',
+      updateStorage: 'No se pudo actualizar el almacenamiento. Inténtalo de nuevo.',
+      deleteStorage: 'No se pudo eliminar el almacenamiento. Inténtalo de nuevo.',
     },
   },
 } as typeof enUs;

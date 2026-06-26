@@ -31,7 +31,7 @@ services:
     networks:
       - white-label-inventory-system-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-white_label_stock}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-white_label_inventory}"]
       interval: 10s
       timeout: 5s
       retries: 5

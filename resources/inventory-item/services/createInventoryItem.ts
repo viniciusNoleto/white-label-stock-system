@@ -5,6 +5,7 @@ import type { PayloadBody } from '@/src/shared/types/api';
 export type CreateInventoryItemServicePayload = {
   name: string;
   unit_id: string;
+  storage_id?: string | null;
   quantity?: number;
   category_ids?: string[];
   components?: Array<{ id: string; quantity_required: number }>;

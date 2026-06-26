@@ -5,8 +5,22 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1781563102287,
-      "tag": "0000_watery_smiling_tiger",
+      "when": 1782438651143,
+      "tag": "0000_silky_mongoose",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782441059973,
+      "tag": "0001_exotic_speed_demon",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782441667446,
+      "tag": "0002_bouncy_vertigo",
       "breakpoints": true
     }
   ]

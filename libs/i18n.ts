@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import ptBR from '@/src/locales/pt-br';
 import esMX from '@/src/locales/es-mx';
 import enUS from '@/src/locales/en-us';
+import { SUPPORTED_LOCALES } from '@/src/shared/constants/locale';
 
 export const LANGUAGE_STORAGE_KEY = 'white-label-inventory-system:language';
 
@@ -13,7 +14,7 @@ i18n
   .init({
     lng: savedLanguage,
     fallbackLng: 'pt-br',
-    supportedLngs: ['pt-br', 'es-mx', 'en-us'],
+    supportedLngs: [...SUPPORTED_LOCALES],
     resources: {
       'pt-br': { translation: ptBR },
       'es-mx': { translation: esMX },

@@ -14,12 +14,12 @@ export type FormButtonProps = ButtonProps & {
   onClick?: React.MouseEventHandler<globalThis.HTMLButtonElement>
 };
 
-export function FormButton({ ...props }: FormButtonProps) {
+export function FormButton({ leftIcon, rightIcon, ...props }: FormButtonProps) {
   const button = (
     <Button
       {...props}
-      leftSection={ props.leftIcon ? <Icon icon={props.leftIcon} className="w-4 h-4" /> : null }
-      rightSection={ props.rightIcon ? <Icon icon={props.rightIcon} className="w-4 h-4" /> : null }
+      leftSection={ leftIcon ? <Icon icon={leftIcon} className="w-4 h-4" /> : props.leftSection }
+      rightSection={ rightIcon ? <Icon icon={rightIcon} className="w-4 h-4" /> : props.rightSection }
       onClick={props.onClick}
     >
       { props.children || props.label || (props.icon ? <Icon icon={props.icon} className="w-4 h-4" /> : null) }

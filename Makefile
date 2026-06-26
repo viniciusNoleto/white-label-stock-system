@@ -56,7 +56,7 @@ watch ?=
 install:
 	@make build
 	@echo
-	@echo "░▒▓█ \033[38;2;22;198;12mWhite Label Stock System\033[0m installed!"
+	@echo "░▒▓█ \033[38;2;22;198;12mWhite Label Inventory System\033[0m installed!"
 	@echo
 ifdef up
 	@make up

@@ -3,3 +3,4 @@ export * from './item-categories';
 export * from './inventory-items';
 export * from './inventory-item-has-category';
 export * from './inventory-item-has-component';
+export * from './storages';

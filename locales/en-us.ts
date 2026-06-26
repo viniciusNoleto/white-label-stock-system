@@ -11,6 +11,8 @@ export default {
       save: 'Save',
       cancel: 'Cancel',
       close: 'Close',
+      edit: 'Edit',
+      delete: 'Delete',
     },
     table: {
       emptyDefault: 'No data found',
@@ -47,9 +49,85 @@ export default {
     },
   },
 
+  header: {
+    colorScheme: {
+      label: 'Appearance',
+      light: 'Light',
+      dark: 'Dark',
+      auto: 'System',
+    },
+  },
+
+  sidebar: {
+    section: 'Inventory',
+    items: 'Items',
+    categories: 'Categories',
+    units: 'Units',
+    storages: 'Storages',
+  },
+
+  units: {
+    page: {
+      title: 'Units',
+      subtitle: 'Manage measurement units',
+    },
+    table: {
+      columns: {
+        name: 'Name',
+        abbreviation: 'Abbreviation',
+      },
+      empty: 'No units found. Create the first one by clicking \'New Unit\'.',
+    },
+  },
+
+  categories: {
+    page: {
+      title: 'Categories',
+      subtitle: 'Manage item categories',
+    },
+    table: {
+      columns: {
+        name: 'Name',
+        color: 'Color',
+      },
+      empty: 'No categories found. Create the first one by clicking \'New Category\'.',
+    },
+    actions: {
+      edit: 'Edit category',
+      delete: 'Delete category',
+    },
+  },
+
+  storages: {
+    page: {
+      title: 'Storages',
+      subtitle: 'Manage storage locations',
+    },
+    table: {
+      columns: {
+        name: 'Name',
+        description: 'Description',
+      },
+      empty: 'No storages found. Create the first one by clicking \'New Storage\'.',
+    },
+    actions: {
+      new: 'New Storage',
+      edit: 'Edit storage',
+      delete: 'Delete storage',
+    },
+    modals: {
+      create: 'New Storage',
+      update: 'Edit Storage',
+      delete: 'Delete Storage',
+    },
+    delete: {
+      confirm: 'Are you sure you want to delete the storage "{{name}}"? This action cannot be undone.',
+    },
+  },
+
   inventory: {
     page: {
-      title: 'Inventory',
+      title: 'Items',
       subtitle: 'Manage your stock items',
     },
     actions: {
@@ -66,18 +144,27 @@ export default {
         categories: 'Categories',
         quantity: 'Quantity',
         unit: 'Unit',
+        storage: 'Storage',
       },
       empty: 'No items found. Create the first one by clicking \'New Item\'.',
     },
     rowActions: {
       editQuantity: 'Edit quantity',
+      editName: 'Edit name',
+      editStorage: 'Edit storage',
       build: 'Build',
     },
     modals: {
       createUnit: 'New Unit',
+      updateUnit: 'Edit Unit',
+      deleteUnit: 'Delete Unit',
       createCategory: 'New Category',
+      updateCategory: 'Edit Category',
+      deleteCategory: 'Delete Category',
       createItem: 'New Inventory Item',
       updateQuantity: 'Edit Quantity',
+      updateName: 'Edit Name',
+      updateStorage: 'Edit Storage',
       build: 'Build: {{name}}',
     },
   },
@@ -86,11 +173,11 @@ export default {
     unit: {
       name: {
         label: 'Name',
-        placeholder: 'E.g.: Kilogram',
+        placeholder: 'Enter a name',
       },
       abbreviation: {
         label: 'Abbreviation',
-        placeholder: 'E.g.: kg',
+        placeholder: 'Enter an abbreviation',
       },
       validation: {
         nameRequired: 'Name is required',
@@ -101,11 +188,11 @@ export default {
     category: {
       name: {
         label: 'Name',
-        placeholder: 'E.g.: Raw Material',
+        placeholder: 'Enter a name',
       },
       color: {
         label: 'Color',
-        placeholder: '#6F1FF9',
+        placeholder: 'Enter a hex color code',
       },
       validation: {
         nameRequired: 'Name is required',
@@ -113,27 +200,45 @@ export default {
       },
     },
 
+    storage: {
+      name: {
+        label: 'Name',
+        placeholder: 'Enter a name',
+      },
+      description: {
+        label: 'Description',
+        placeholder: 'Describe this storage location',
+      },
+      validation: {
+        nameRequired: 'Name is required',
+      },
+    },
+
     inventoryItem: {
       name: {
         label: 'Name',
-        placeholder: 'E.g.: M6 Screw',
+        placeholder: 'Enter a name',
       },
       unit: {
         label: 'Unit',
-        placeholder: 'Select',
+        placeholder: 'Select a unit',
       },
       quantity: {
         label: 'Initial quantity',
-        placeholder: '0',
+        placeholder: 'Enter a quantity',
       },
       categories: {
         label: 'Categories',
         placeholder: 'Select categories',
       },
+      storage: {
+        label: 'Storage',
+        placeholder: 'Select a storage location (optional)',
+      },
       components: {
         label: 'Components',
-        selectPlaceholder: 'Select item as component',
-        qtyPlaceholder: 'Qty.',
+        selectPlaceholder: 'Select an item',
+        qtyPlaceholder: 'Enter a quantity',
         empty: 'No components added.',
       },
       validation: {
@@ -151,9 +256,11 @@ export default {
       },
       quantity: {
         label: 'New quantity',
+        placeholder: 'Enter a value',
       },
       amount: {
         label: 'Amount',
+        placeholder: 'Enter a value',
       },
       preview: 'New quantity: {{count}}',
       validation: {
@@ -170,7 +277,7 @@ export default {
       maxPossibleLabel: 'Max. possible: {{count}}',
       quantity: {
         label: 'Quantity to build',
-        placeholder: '1',
+        placeholder: 'Enter a quantity',
       },
       submit: 'Build',
       validation: {
@@ -183,10 +290,19 @@ export default {
   notifications: {
     errors: {
       createUnit: 'Could not create the unit. Please try again.',
+      updateUnit: 'Could not update the unit. Please try again.',
+      deleteUnit: 'Could not delete the unit. Please try again.',
       createCategory: 'Could not create the category. Please try again.',
+      updateCategory: 'Could not update the category. Please try again.',
+      deleteCategory: 'Could not delete the category. Please try again.',
       createItem: 'Could not create the item. Please try again.',
       updateQuantity: 'Could not update the quantity.',
+      updateItemName: 'Could not update the name. Please try again.',
+      updateItemStorage: 'Could not update the storage. Please try again.',
       build: 'Could not build the item.',
+      createStorage: 'Could not create the storage. Please try again.',
+      updateStorage: 'Could not update the storage. Please try again.',
+      deleteStorage: 'Could not delete the storage. Please try again.',
     },
   },
 };

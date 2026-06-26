@@ -9,6 +9,7 @@ import { Form } from '@/src/components/form/Form';
 import { FormButton } from '@/src/components/form/Button';
 import { FormNumberInput } from '@/src/components/form/Number';
 import { useValidatedFormState } from '@/src/utils/state';
+import { resolveApiMessage } from '@/src/utils/apiMessage';
 import { buildInventoryItemService } from '../services/buildInventoryItem';
 import type { IInventoryItem } from '../models/InventoryItem';
 import { UtilsFor } from '@/src/components/utils/For';
@@ -21,7 +22,7 @@ export function useBuildInventoryItemLogicData({
   editingItemId: string;
   onSuccess: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const buildSchema = useMemo(() => yup.object({
     quantity: yup.number().default(1).min(1, t('forms.build.validation.min')).required(t('forms.build.validation.required')),
@@ -36,13 +37,13 @@ export function useBuildInventoryItemLogicData({
         body: { quantity: buildValidatedFormState.state.quantity },
       }),
     onSuccess: (res) => {
-      notifications.show({ message: res.message, color: 'green' });
+      notifications.show({ message: resolveApiMessage(res.message, i18n.language), color: 'green' });
       onSuccess();
     },
     onError: (err: any) => {
       notifications.show({
         title: t('common.notifications.errorTitle'),
-        message: err?.message ?? t('notifications.errors.build'),
+        message: err?.message ? resolveApiMessage(err.message, i18n.language) : t('notifications.errors.build'),
         color: 'red',
       });
     },

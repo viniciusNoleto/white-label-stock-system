@@ -1,7 +1,10 @@
+import { SupportedLocale } from '@/src/shared/constants/locale';
+
+export type ApiMessage = Record<SupportedLocale, string>;
 
 export type ApiReponse<T> = {
   data: T,
-  message: string
+  message: ApiMessage
 }
 
 export type PaginatedResponse<T> = {

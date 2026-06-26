@@ -12,9 +12,11 @@ import { FormSelect } from '@/src/components/form/Select';
 import { FormNumberInput } from '@/src/components/form/Number';
 import { FormMultiSelect } from '@/src/components/form/MultiSelect';
 import { useValidatedFormState } from '@/src/utils/state';
+import { resolveApiMessage } from '@/src/utils/apiMessage';
 import { createInventoryItemService } from '../services/createInventoryItem';
 import { getUnitsService, GET_UNITS_KEY } from '@/src/resources/unit/services/getUnits';
 import { getItemCategoriesService, GET_ITEM_CATEGORIES_KEY } from '@/src/resources/item-category/services/getItemCategories';
+import { getStoragesService, GET_STORAGES_KEY } from '@/src/resources/storage/services/getStorages';
 import { getInventoryItemsService, GET_INVENTORY_ITEMS_KEY } from '../services/getInventoryItems';
 import { UtilsFor } from '@/src/components/utils/For';
 import { Icon } from '@iconify/react';
@@ -27,11 +29,12 @@ type ComponentEntry = {
 };
 
 export function useCreateInventoryItemLogicData({ onSuccess }: { onSuccess: () => void }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const createInventoryItemSchema = useMemo(() => yup.object({
     name: yup.string().default('').required(t('forms.inventoryItem.validation.nameRequired')).max(255),
     unit_id: yup.string().required(t('forms.inventoryItem.validation.unitRequired')),
+    storage_id: yup.string().default('').optional().nullable(),
     quantity: yup.number().default(0).min(0),
     category_ids: yup.array().of(yup.string()).default([]),
   }), [t]);
@@ -40,26 +43,27 @@ export function useCreateInventoryItemLogicData({ onSuccess }: { onSuccess: () =
   const [components, setComponents] = useState<ComponentEntry[]>([]);
 
   const createInventoryItemMutation = useMutation({
-    mutationFn: () => {
-      const { name, unit_id, quantity, category_ids } = createInventoryItemValidatedFormState.state;
+    mutationFn: ({ components: comps }: { components: ComponentEntry[] }) => {
+      const { name, unit_id, storage_id, quantity, category_ids } = createInventoryItemValidatedFormState.state;
       return createInventoryItemService({
         body: {
           name,
           unit_id,
+          storage_id: storage_id || null,
           quantity,
           category_ids: category_ids?.filter(Boolean) as string[],
-          components: components.map(c => ({ id: c.id, quantity_required: c.quantity_required })),
+          components: comps.map(c => ({ id: c.id, quantity_required: c.quantity_required })),
         },
       });
     },
     onSuccess: (res) => {
-      notifications.show({ message: res.message, color: 'green' });
+      notifications.show({ message: resolveApiMessage(res.message, i18n.language), color: 'green' });
       onSuccess();
     },
     onError: (err: any) => {
       notifications.show({
         title: t('common.notifications.errorTitle'),
-        message: err?.message ?? t('notifications.errors.createItem'),
+        message: err?.message ? resolveApiMessage(err.message, i18n.language) : t('notifications.errors.createItem'),
         color: 'red',
       });
     },
@@ -118,8 +122,14 @@ export function CreateInventoryItemLogicComponent({
     queryFn: ({ signal }) => getInventoryItemsService({ signal }),
   });
 
+  const { data: storagesData } = useQuery({
+    queryKey: GET_STORAGES_KEY,
+    queryFn: ({ signal }) => getStoragesService({ signal }),
+  });
+
   const units = unitsData?.data ?? [];
   const categories = categoriesData?.data ?? [];
+  const storagesList = storagesData?.data ?? [];
   const allItems = allItemsData?.data?.items ?? [];
 
   const availableComponentItems = allItems.filter(
@@ -145,7 +155,7 @@ export function CreateInventoryItemLogicComponent({
 
   async function submit() {
     if (!await validateItem()) return;
-    createInventoryItem();
+    createInventoryItem({ components });
   }
 
   return (
@@ -178,6 +188,16 @@ export function CreateInventoryItemLogicComponent({
           {...itemField('quantity')}
         />
       </div>
+
+      <FormSelect
+        label={t('forms.inventoryItem.storage.label')}
+        placeholder={t('forms.inventoryItem.storage.placeholder')}
+        data={storagesList}
+        valueField="id"
+        labelField="name"
+        clearable
+        {...itemField('storage_id')}
+      />
 
       <FormMultiSelect
         label={t('forms.inventoryItem.categories.label')}

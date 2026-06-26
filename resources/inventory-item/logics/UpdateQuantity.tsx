@@ -9,6 +9,7 @@ import { Form } from '@/src/components/form/Form';
 import { FormButton } from '@/src/components/form/Button';
 import { FormNumberInput } from '@/src/components/form/Number';
 import { useValidatedFormState } from '@/src/utils/state';
+import { resolveApiMessage } from '@/src/utils/apiMessage';
 import { updateInventoryItemQuantityService } from '../services/updateInventoryItemQuantity';
 import type { IInventoryItem } from '../models/InventoryItem';
 import { SegmentedControl } from '@mantine/core';
@@ -22,7 +23,7 @@ export function useUpdateQuantityLogicData({
   editingItemId: string;
   onSuccess: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [currentQuantity, setCurrentQuantity] = useState(0);
 
   const updateQuantitySchema = useMemo(() => yup.object({
@@ -47,13 +48,13 @@ export function useUpdateQuantityLogicData({
       });
     },
     onSuccess: (res) => {
-      notifications.show({ message: res.message, color: 'green' });
+      notifications.show({ message: resolveApiMessage(res.message, i18n.language), color: 'green' });
       onSuccess();
     },
     onError: (err: any) => {
       notifications.show({
         title: t('common.notifications.errorTitle'),
-        message: err?.message ?? t('notifications.errors.updateQuantity'),
+        message: err?.message ? resolveApiMessage(err.message, i18n.language) : t('notifications.errors.updateQuantity'),
         color: 'red',
       });
     },
@@ -121,7 +122,7 @@ export function UpdateQuantityLogicComponent({
 
       <FormNumberInput
         label={mode === 'set' ? t('forms.updateQuantity.quantity.label') : t('forms.updateQuantity.amount.label')}
-        placeholder="0"
+        placeholder={mode === 'set' ? t('forms.updateQuantity.quantity.placeholder') : t('forms.updateQuantity.amount.placeholder')}
         min={0}
         step={1}
         required

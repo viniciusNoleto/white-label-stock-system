@@ -26,11 +26,13 @@ export function FormSelect<T>({ value, onChange, onValidate, valueField, labelFi
     return props.data as SelectProps['data'];
   }, [props.data, valueField, labelField]);
 
+  const clearable = useMemo(() => !props.disabled && props.clearable !== false && value, [props.disabled, props.clearable, value])
+
   return (
     <Select
       {...props}
       value={value}
-      clearable={!props.disabled && props.clearable !== false}
+      clearable={clearable}
       data={data}
       onChange={event => onChange?.(event)}
       onBlur={onValidate}

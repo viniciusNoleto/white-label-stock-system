@@ -9,10 +9,11 @@ import { Form } from '@/src/components/form/Form';
 import { FormButton } from '@/src/components/form/Button';
 import { FormTextInput } from '@/src/components/form/TextInput';
 import { useValidatedFormState } from '@/src/utils/state';
+import { resolveApiMessage } from '@/src/utils/apiMessage';
 import { createUnitService } from '../services/createUnit';
 
 export function useCreateUnitLogicData({ onSuccess }: { onSuccess: () => void }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const createUnitSchema = useMemo(() => yup.object({
     name: yup.string().default('').required(t('forms.unit.validation.nameRequired')).max(100),
@@ -24,13 +25,13 @@ export function useCreateUnitLogicData({ onSuccess }: { onSuccess: () => void })
   const createUnitMutation = useMutation({
     mutationFn: () => createUnitService({ body: createUnitValidatedFormState.state }),
     onSuccess: (res) => {
-      notifications.show({ message: res.message, color: 'green' });
+      notifications.show({ message: resolveApiMessage(res.message, i18n.language), color: 'green' });
       onSuccess();
     },
     onError: (err: any) => {
       notifications.show({
         title: t('common.notifications.errorTitle'),
-        message: err?.message ?? t('notifications.errors.createUnit'),
+        message: err?.message ? resolveApiMessage(err.message, i18n.language) : t('notifications.errors.createUnit'),
         color: 'red',
       });
     },

@@ -50,6 +50,13 @@ Cada arquivo em `.claude/rules/` documenta a interface exata, o comportamento in
 | `logics/{Acao}.tsx` (hook + UI de create/update/disable/etc.) | `resources-logic.md` |
 | `mocks/` (handlers MSW) | `resources-mocks.md` |
 
+## API (Route Handlers e models)
+
+| Ao criar/editar... | Leia |
+|---|---|
+| Route Handlers (`app/api/**`) ou schemas Drizzle (`db/schema/`) | `api-response-format.md` |
+| Interfaces de model (`resources/*/models/*.ts`) | `api-response-format.md` |
+
 ## Regra geral
 
 Se a tarefa envolve qualquer componente ou padrão listado acima, leia a regra **antes** de escrever código — ela define nomes de função obrigatórios, convenções de nomenclatura e erros comuns que não são óbvios a partir do código já existente.

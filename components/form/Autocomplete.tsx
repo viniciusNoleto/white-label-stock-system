@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { FormInputPropsOnChange, FormInputPropsOnValidate } from "./types";
 import { useDebouncedEffect, useNotFirstEffect } from "@/src/utils/hooks";
 
-export type FormAutocompleteProps<T> = FormInputPropsOnChange<{}> & FormInputPropsOnValidate & {
+export type FormAutocompleteProps<T> = FormInputPropsOnChange & FormInputPropsOnValidate & {
   data?: T[];
   valueField?: Hook<T>;
   labelField?: Hook<T>;
@@ -19,7 +19,7 @@ export type FormAutocompleteProps<T> = FormInputPropsOnChange<{}> & FormInputPro
   description?: string;
 };
 
-export function FormAutocomplete<T>({ value, onChange, onValidate, limit = 10, ...props }: FormAutocompleteProps<T>) {
+export function FormAutocomplete<T>({ valueField, labelField, value, onChange, onValidate, limit = 10, ...props }: FormAutocompleteProps<T>) {
   
   const combobox = useCombobox()
   
@@ -36,10 +36,10 @@ export function FormAutocomplete<T>({ value, onChange, onValidate, limit = 10, .
   const data = useMemo<ComboboxItem[]>(() => {
     if (!props.data) return [];
   
-    if (props.valueField || props.labelField) {
+    if (valueField || labelField) {
       return props.data.slice(0, limit).map(item => ({
-        value: getter(item as any, props.valueField),
-        label: getter(item as any, props.labelField)
+        value: getter(item as any, valueField),
+        label: getter(item as any, labelField)
       }));
     }
   
@@ -47,7 +47,7 @@ export function FormAutocomplete<T>({ value, onChange, onValidate, limit = 10, .
       value: item,
       label: item
     }));
-  }, [props.data, props.valueField, props.labelField, limit]);
+  }, [props.data, valueField, labelField, limit]);
 
   return (
     <Combobox
@@ -55,7 +55,7 @@ export function FormAutocomplete<T>({ value, onChange, onValidate, limit = 10, .
       onOptionSubmit={(value, optionProps) => {
         onChange?.(value as any)
 
-        // @ts-expect-error
+        // @ts-expect-error because yes
         setTerm(optionProps.label)
 
         combobox.closeDropdown()
@@ -91,7 +91,7 @@ export function FormAutocomplete<T>({ value, onChange, onValidate, limit = 10, .
             <Combobox.Option
               key={item.value}
               value={item.value}
-              // @ts-expect-error
+              // @ts-expect-error because yes
               label={item.label}
             >
               {item.label}

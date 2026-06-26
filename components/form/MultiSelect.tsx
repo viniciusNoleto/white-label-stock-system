@@ -10,7 +10,7 @@ export type FormMultiSelectProps<T> = Omit<FormInputPropsOnChange<MultiSelectPro
   labelField?: Hook<T>;
 };
 
-export function FormMultiSelect<T>({ value, onChange, onValidate, ...props }: FormMultiSelectProps<T>) {
+export function FormMultiSelect<T>({ value, valueField, labelField, onChange, onValidate, ...props }: FormMultiSelectProps<T>) {
   useNotFirstEffect(() => {
     onValidate?.();
   }, [value]);
@@ -18,19 +18,21 @@ export function FormMultiSelect<T>({ value, onChange, onValidate, ...props }: Fo
   const data = useMemo(() => {
     if (!Array.isArray(props.data)) return [];
 
-    if (props.valueField || props.labelField) return (props.data as any[]).map(item => ({
-      value: getter(item, props.valueField),
-      label: getter(item, props.labelField)
+    if (valueField || labelField) return (props.data as any[]).map(item => ({
+      value: getter(item, valueField),
+      label: getter(item, labelField)
     }));
 
     return props.data as MultiSelectProps['data'];
-  }, [props.data, props.valueField, props.labelField]);
+  }, [props.data, valueField, labelField]);
+
+  const clearable = useMemo(() => !props.disabled && props.clearable !== false && Array.isArray(value) && value.length > 0, [props.disabled, props.clearable, value])
 
   return (
     <MultiSelect
       {...props}
       value={value}
-      clearable={!props.disabled}
+      clearable={clearable}
       data={data}
       onChange={event => onChange?.(event)}
       onBlur={onValidate}

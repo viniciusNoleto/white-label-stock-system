@@ -1,6 +1,8 @@
+import { ApiMessage } from '@/src/shared/types/api';
+
 export type AppApiResponse<T> = {
   success: boolean;
-  message: string;
+  message: ApiMessage;
   data: T;
 };
 
@@ -36,5 +38,8 @@ export const appClient = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(options.body),
     });
+  },
+  delete<T>(url: string): Promise<AppApiResponse<T>> {
+    return request<T>(url, { method: 'DELETE' });
   },
 };

@@ -17,6 +17,11 @@ export interface IInventoryItemComponent {
   current_quantity: string;
 }
 
+export interface IInventoryItemStorage {
+  id: number;
+  name: string;
+}
+
 export interface IInventoryItem {
   id: string;
   name: string;
@@ -24,6 +29,7 @@ export interface IInventoryItem {
   created_at: string | null;
   updated_at: string | null;
   unit: IInventoryItemUnit;
+  storage: IInventoryItemStorage | null;
   categories: IInventoryItemCategory[];
   components: IInventoryItemComponent[];
 }

@@ -13,6 +13,8 @@ export default {
       save: 'Salvar',
       cancel: 'Cancelar',
       close: 'Fechar',
+      edit: 'Editar',
+      delete: 'Excluir',
     },
     table: {
       emptyDefault: 'Nenhum dado encontrado',
@@ -49,9 +51,85 @@ export default {
     },
   },
 
+  header: {
+    colorScheme: {
+      label: 'Aparência',
+      light: 'Claro',
+      dark: 'Escuro',
+      auto: 'Sistema',
+    },
+  },
+
+  sidebar: {
+    section: 'Inventário',
+    items: 'Itens',
+    categories: 'Categorias',
+    units: 'Unidades',
+    storages: 'Armazenamentos',
+  },
+
+  units: {
+    page: {
+      title: 'Unidades',
+      subtitle: 'Gerencie as unidades de medida',
+    },
+    table: {
+      columns: {
+        name: 'Nome',
+        abbreviation: 'Abreviação',
+      },
+      empty: 'Nenhuma unidade cadastrada. Crie a primeira clicando em \'Nova Unidade\'.',
+    },
+  },
+
+  categories: {
+    page: {
+      title: 'Categorias',
+      subtitle: 'Gerencie as categorias de itens',
+    },
+    table: {
+      columns: {
+        name: 'Nome',
+        color: 'Cor',
+      },
+      empty: 'Nenhuma categoria cadastrada. Crie a primeira clicando em \'Nova Categoria\'.',
+    },
+    actions: {
+      edit: 'Editar categoria',
+      delete: 'Excluir categoria',
+    },
+  },
+
+  storages: {
+    page: {
+      title: 'Armazenamentos',
+      subtitle: 'Gerencie os locais de armazenamento',
+    },
+    table: {
+      columns: {
+        name: 'Nome',
+        description: 'Descrição',
+      },
+      empty: 'Nenhum armazenamento cadastrado. Crie o primeiro clicando em \'Novo Armazenamento\'.',
+    },
+    actions: {
+      new: 'Novo Armazenamento',
+      edit: 'Editar armazenamento',
+      delete: 'Excluir armazenamento',
+    },
+    modals: {
+      create: 'Novo Armazenamento',
+      update: 'Editar Armazenamento',
+      delete: 'Excluir Armazenamento',
+    },
+    delete: {
+      confirm: 'Tem certeza que deseja excluir o armazenamento "{{name}}"? Esta ação não pode ser desfeita.',
+    },
+  },
+
   inventory: {
     page: {
-      title: 'Inventário',
+      title: 'Itens',
       subtitle: 'Gerencie seus itens de estoque',
     },
     actions: {
@@ -68,18 +146,27 @@ export default {
         categories: 'Categorias',
         quantity: 'Quantidade',
         unit: 'Unidade',
+        storage: 'Armazenamento',
       },
       empty: 'Nenhum item encontrado. Crie o primeiro item clicando em \'Novo Item\'.',
     },
     rowActions: {
       editQuantity: 'Editar quantidade',
+      editName: 'Editar nome',
+      editStorage: 'Editar armazenamento',
       build: 'Construir',
     },
     modals: {
       createUnit: 'Nova Unidade',
+      updateUnit: 'Editar Unidade',
+      deleteUnit: 'Excluir Unidade',
       createCategory: 'Nova Categoria',
+      updateCategory: 'Editar Categoria',
+      deleteCategory: 'Excluir Categoria',
       createItem: 'Novo Item de Inventário',
       updateQuantity: 'Editar Quantidade',
+      updateName: 'Editar Nome',
+      updateStorage: 'Editar Armazenamento',
       build: 'Construir: {{name}}',
     },
   },
@@ -88,11 +175,11 @@ export default {
     unit: {
       name: {
         label: 'Nome',
-        placeholder: 'Ex: Quilograma',
+        placeholder: 'Digite um nome',
       },
       abbreviation: {
         label: 'Abreviação',
-        placeholder: 'Ex: kg',
+        placeholder: 'Digite uma abreviação',
       },
       validation: {
         nameRequired: 'Nome é obrigatório',
@@ -103,11 +190,11 @@ export default {
     category: {
       name: {
         label: 'Nome',
-        placeholder: 'Ex: Matéria-Prima',
+        placeholder: 'Digite um nome',
       },
       color: {
         label: 'Cor',
-        placeholder: '#6F1FF9',
+        placeholder: 'Digite um código de cor',
       },
       validation: {
         nameRequired: 'Nome é obrigatório',
@@ -115,27 +202,45 @@ export default {
       },
     },
 
+    storage: {
+      name: {
+        label: 'Nome',
+        placeholder: 'Digite um nome',
+      },
+      description: {
+        label: 'Descrição',
+        placeholder: 'Descreva este local de armazenamento',
+      },
+      validation: {
+        nameRequired: 'Nome é obrigatório',
+      },
+    },
+
     inventoryItem: {
       name: {
         label: 'Nome',
-        placeholder: 'Ex: Parafuso M6',
+        placeholder: 'Digite um nome',
       },
       unit: {
         label: 'Unidade',
-        placeholder: 'Selecione',
+        placeholder: 'Selecione uma unidade',
       },
       quantity: {
         label: 'Quantidade inicial',
-        placeholder: '0',
+        placeholder: 'Digite uma quantidade',
       },
       categories: {
         label: 'Categorias',
         placeholder: 'Selecione as categorias',
       },
+      storage: {
+        label: 'Armazenamento',
+        placeholder: 'Selecione um local de armazenamento (opcional)',
+      },
       components: {
         label: 'Componentes',
-        selectPlaceholder: 'Selecionar item como componente',
-        qtyPlaceholder: 'Qtd.',
+        selectPlaceholder: 'Selecione um item',
+        qtyPlaceholder: 'Digite uma quantidade',
         empty: 'Nenhum componente adicionado.',
       },
       validation: {
@@ -153,9 +258,11 @@ export default {
       },
       quantity: {
         label: 'Nova quantidade',
+        placeholder: 'Digite um valor',
       },
       amount: {
         label: 'Valor',
+        placeholder: 'Digite um valor',
       },
       preview: 'Nova quantidade: {{count}}',
       validation: {
@@ -172,7 +279,7 @@ export default {
       maxPossibleLabel: 'Máx. possível: {{count}}',
       quantity: {
         label: 'Quantidade a construir',
-        placeholder: '1',
+        placeholder: 'Digite uma quantidade',
       },
       submit: 'Construir',
       validation: {
@@ -185,10 +292,19 @@ export default {
   notifications: {
     errors: {
       createUnit: 'Não foi possível criar a unidade. Tente novamente.',
+      updateUnit: 'Não foi possível atualizar a unidade. Tente novamente.',
+      deleteUnit: 'Não foi possível excluir a unidade. Tente novamente.',
       createCategory: 'Não foi possível criar a categoria. Tente novamente.',
+      updateCategory: 'Não foi possível atualizar a categoria. Tente novamente.',
+      deleteCategory: 'Não foi possível excluir a categoria. Tente novamente.',
       createItem: 'Não foi possível criar o item. Tente novamente.',
       updateQuantity: 'Não foi possível atualizar a quantidade.',
+      updateItemName: 'Não foi possível atualizar o nome. Tente novamente.',
+      updateItemStorage: 'Não foi possível atualizar o armazenamento. Tente novamente.',
       build: 'Não foi possível construir o item.',
+      createStorage: 'Não foi possível criar o armazenamento. Tente novamente.',
+      updateStorage: 'Não foi possível atualizar o armazenamento. Tente novamente.',
+      deleteStorage: 'Não foi possível excluir o armazenamento. Tente novamente.',
     },
   },
 } as typeof enUs;
